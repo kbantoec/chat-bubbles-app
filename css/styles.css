@@ -1,5 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
+    font-size: 1.5em;
     background-color: #00ff00;
     overflow: hidden;
 }
@@ -11,16 +12,52 @@ body {
     right: 10px;
 }
 
+.bubble-container {
+    width: 100%;  /* Take up the full width available */
+    display: flex;  /* Use flexbox to center the bubble horizontally */
+    justify-content: flex-start;  /* Align the bubble to the start (left) */
+}
+
+.bubble-container.fadeOut {
+    animation-name: fadeOut;
+    animation-duration: 1s;
+    opacity: 0;
+}
+
 .bubble {
     max-width: 80%;
     background-color: #ffffff;
     border-radius: 12px;
     padding: 10px;
+    margin-left: 30px;
     margin-bottom: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 1s;
+    display: inline-block; /* This will make the bubble's width adjust to its content */
+    white-space: nowrap;   /* Prevents the text from wrapping to the next line */
+    animation-name: fadeIn; /* Set the animation name */
+    animation-duration: 1s; /* Duration of the animation */
     opacity: 1;  /* Explicitly set the opacity to 1 */
     transition: opacity 1s;  /* This will allow smooth transition when we change the opacity */
+    position: relative;  /* This is needed for positioning the pseudo-element */
+}
+
+.bubble::before {
+    content: "";  /* Necessary for the pseudo-element to be generated */
+    position: absolute;  /* Position it relative to the .bubble */
+    top: 25px;  /* Adjust as necessary to position the tail vertically */
+    left: -10px;  /* Position the tail to the left of the bubble */
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 10px 5px 0;  /* Create a triangle shape */
+    border-color: transparent #ffffff transparent transparent;  /* Fill the triangle with bubble's background color */
+}
+
+
+.bubble.fadeOut {
+    animation-name: fadeOut;
+    animation-duration: 1s;
+    opacity: 0;
 }
 
 @keyframes fadeIn {
@@ -32,14 +69,14 @@ body {
     }
 }
 
-/* @keyframes fadeOut {
+@keyframes fadeOut {
     from {
         opacity: 1;
     }
     to {
         opacity: 0;
     }
-} */
+}
 
 .countdown {
     font-size: 0.8em;
